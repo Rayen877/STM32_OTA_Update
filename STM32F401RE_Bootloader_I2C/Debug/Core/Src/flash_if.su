@@ -1,0 +1,2 @@
+../Core/Src/flash_if.c:5:19:FlashIF_EraseApplication	40	static
+../Core/Src/flash_if.c:53:19:FlashIF_Write	48	static

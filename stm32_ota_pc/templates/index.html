@@ -1,0 +1,41 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>STM32 OTA Dashboard</title>
+<style>body{margin:0;background:#f4f6f8;font-family:Arial;color:#17202a}.c{max-width:900px;margin:40px auto;padding:0 20px}.card{background:#fff;border-radius:12px;padding:28px;box-shadow:0 4px 20px #0001;margin-bottom:20px}label{display:block;margin:16px 0 6px;font-weight:600}input{width:100%;box-sizing:border-box;padding:10px;border:1px solid #ccd3da;border-radius:7px}button{margin-top:24px;padding:11px 22px;border:0;border-radius:7px;background:#1f6feb;color:#fff;font-size:15px}button:disabled{background:#9aa4af}.bar{height:22px;background:#e5e7eb;border-radius:11px;overflow:hidden}.bar>div{height:100%;width:0;background:#1f6feb;transition:width .2s}pre{background:#111827;color:#d1d5db;padding:16px;border-radius:8px;overflow:auto}</style></head>
+<body><div class="c"><div class="card"><h1>STM32 OTA Dashboard</h1><p>Select the matching application .bin and .elf.</p>
+<form id="f"><label>Firmware .bin</label><input id="bin" type="file" accept=".bin" required><label>Matching .elf</label><input id="elf" type="file" accept=".elf" required>
+<label>Version (optional)</label><input id="ver" placeholder="1.2.3"><label>Build ID (optional)</label><input id="build" placeholder="20260917-001"><label>Hardware ID (optional)</label><input id="hw" placeholder="STM32F401RE"><button id="send">Stage Firmware on ESP32</button><br><button id="flash" disabled>Flash Firmware to STM32</button></form></div>
+<div class="card"><h2 id="state">IDLE</h2><div id="msg">Waiting for firmware</div><div class="bar"><div id="p"></div></div><p id="pct">0%</p><pre id="d">{}</pre></div></div>
+<script>
+const f=document.getElementById("f"),b=document.getElementById("send"),flash=document.getElementById("flash");
+f.onsubmit=async e=>{e.preventDefault();let x=new FormData();x.append("bin_file",bin.files[0]);x.append("elf_file",elf.files[0]);x.append("version",ver.value);x.append("build_id",build.value);x.append("hw_id",hw.value);b.disabled=true;try{let r=await fetch("/api/upload",{method:"POST",body:x});let j=await r.json();if(!r.ok)throw Error(j.detail||"Upload failed")}catch(e){alert(e.message);b.disabled=false}};
+flash.onclick=async()=>{
+  flash.disabled=true;
+  try{
+    let r=await fetch("/api/flash",{method:"POST"});
+    let j=await r.json();
+    if(!r.ok) throw Error(j.message||j.detail||"Flash request failed");
+  }catch(e){alert(e.message); flash.disabled=false;}
+};
+function setTextIfChanged(el, value) {
+  if (el.textContent !== value) el.textContent = value;
+}
+let lastDetails = "";
+setInterval(async()=>{
+  try {
+    let s = await (await fetch("/api/status")).json();
+    let p = Number(s.progress || 0);
+    setTextIfChanged(state, s.state || "UNKNOWN");
+    setTextIfChanged(msg, s.message || "");
+    let w = p + "%";
+    if (document.getElementById("p").style.width !== w)
+      document.getElementById("p").style.width = w;
+    setTextIfChanged(pct, w);
+    let details = JSON.stringify(s.metadata || s, null, 2);
+    if (details !== lastDetails) {
+      d.textContent = details;
+      lastDetails = details;
+    }
+    b.disabled = !["IDLE","IMAGE_READY","ERROR","STM32_UPDATE_COMPLETE"].includes(s.state);
+    flash.disabled = s.state !== "IMAGE_READY";
+  } catch(e) {}
+},750);
+</script></body></html>

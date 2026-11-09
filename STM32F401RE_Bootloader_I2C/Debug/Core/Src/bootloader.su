@@ -1,0 +1,11 @@
+../Core/Src/bootloader.c:36:13:VersionGreater	16	static
+../Core/Src/bootloader.c:57:13:FindMetadata	24	static
+../Core/Src/bootloader.c:100:13:VerifyApplicationImage	24	static
+../Core/Src/bootloader.c:167:6:Bootloader_ApplicationIsValid	24	static
+../Core/Src/bootloader.c:190:6:Bootloader_JumpToApplication	32	static,ignoring_inline_asm
+../Core/Src/bootloader.c:258:13:SendInfo	72	static
+../Core/Src/bootloader.c:349:16:HandleStartUpdate	48	static
+../Core/Src/bootloader.c:492:16:HandleData	24	static
+../Core/Src/bootloader.c:569:16:HandleFinish	8	static
+../Core/Src/bootloader.c:593:13:ProcessFrame	24	static
+../Core/Src/bootloader.c:754:6:Bootloader_Run	32	static

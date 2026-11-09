@@ -1,0 +1,9 @@
+../Core/Src/protocol.c:81:6:Protocol_Init	1
+../Core/Src/protocol.c:98:6:HAL_I2C_ListenCpltCallback	1
+../Core/Src/protocol.c:105:6:HAL_I2C_ErrorCallback	1
+../Core/Src/protocol.c:113:6:HAL_I2C_AddrCallback	5
+../Core/Src/protocol.c:192:6:HAL_I2C_SlaveRxCpltCallback	7
+../Core/Src/protocol.c:248:13:Protocol_I2CWatchdog	2
+../Core/Src/protocol.c:270:16:Protocol_Receive	12
+../Core/Src/protocol.c:361:19:Protocol_Send	6
+../Core/Src/protocol.c:445:19:Protocol_SendAck	1

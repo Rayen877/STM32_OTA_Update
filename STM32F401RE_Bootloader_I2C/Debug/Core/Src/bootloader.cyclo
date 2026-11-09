@@ -1,0 +1,11 @@
+../Core/Src/bootloader.c:36:13:VersionGreater	3
+../Core/Src/bootloader.c:57:13:FindMetadata	6
+../Core/Src/bootloader.c:100:13:VerifyApplicationImage	7
+../Core/Src/bootloader.c:167:6:Bootloader_ApplicationIsValid	8
+../Core/Src/bootloader.c:190:6:Bootloader_JumpToApplication	3
+../Core/Src/bootloader.c:258:13:SendInfo	8
+../Core/Src/bootloader.c:349:16:HandleStartUpdate	16
+../Core/Src/bootloader.c:492:16:HandleData	11
+../Core/Src/bootloader.c:569:16:HandleFinish	4
+../Core/Src/bootloader.c:593:13:ProcessFrame	14
+../Core/Src/bootloader.c:754:6:Bootloader_Run	9
