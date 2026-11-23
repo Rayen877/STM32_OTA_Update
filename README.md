@@ -1,7 +1,7 @@
 
 # STM32 Firmware OTA Update System
 
-An Over-The-Air (OTA) firmware update system for multiple STM32F401RE microcontrollers, using an ESP32 as an intermediary between the STM32 devices and a PC-based Python dashboard.
+An Over-The-Air (OTA) firmware update system for multiple STM32 microcontrollers, using an ESP32 as an intermediary between the STM32 devices and a PC-based Python dashboard.
 
 The system allows firmware to be uploaded remotely through MQTT, distributed by the ESP32 over an I2C bus, and installed using a custom bootloader running on each STM32.
 
